@@ -57,7 +57,7 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            echo 'war app ready!'
         }
     }
 }
