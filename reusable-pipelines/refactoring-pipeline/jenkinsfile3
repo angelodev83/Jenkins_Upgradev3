@@ -49,15 +49,19 @@ pipeline {
         }
 
         stage('Publish') {
+            when {
+                expression { return params.RELEASE }
+            }
+
             steps {
-                echo 'Publishing...'
+                archiveArtifacts('**/*.war')
             }
         }
     }
 
     post {
         always {
-            echo 'war app ready!'
+            cleanWs()
         }
     }
 }
