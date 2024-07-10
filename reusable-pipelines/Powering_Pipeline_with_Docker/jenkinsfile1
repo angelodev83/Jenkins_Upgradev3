@@ -7,44 +7,42 @@ pipeline {
     }
     
     environment {
-      VERSION = '0.1.0'
-      RELEASE_VERSION = 'R.2'
+        VERSION = '0.1.0'
+        RELEASE_VERSION = 'R.2'
     }
 
     stages {
-      stage('Audit tools') {
-        steps {
-          sh '''
-              java -version
-              mvn -version
-          '''
-          sh 'printenv'
-          sh 'ls -l $WORKSPACE'
+        stage('Audit tools') {
+            steps {
+                sh '''
+                    java -version
+                    mvn -version
+                '''
+                sh 'printenv'
+                sh 'ls -l $WORKSPACE'
+            }
         }
-      }
 
-      stage('Unit Test') {
-        steps {
-          dir('./java-tomcat-sample') {
-            sh '''
-              echo "Executing Unit Tests..."
-              mvn test
-          '''
-          }
+        stage('Unit Test') {
+            steps {
+                dir('./java-tomcat-sample') {
+                    sh '''
+                        echo "Executing Unit Tests..."
+                        mvn test
+                    ''' // Closing triple quote added
+                }
+            }
         }
-      }
 
-      stage('Build') {
-        steps {
-          echo "Building version: ${VERSION} with suffix: ${RELEASE_VERSION}"
-          echo 'Mention your Application Build Code here!!!'
-          sh 'mvn -f java-tomcat-sample/pom.xml clean package'
+        stage('Build') {
+            steps {
+                echo "Building version: ${VERSION} with suffix: ${RELEASE_VERSION}"
+                echo 'Mention your Application Build Code here!!!'
+                sh 'mvn -f java-tomcat-sample/pom.xml clean package'
+            }
         }
-      }
     }
 }
-
-
 
 /*
 Requirements -- 
